@@ -17,10 +17,9 @@ sequelize
         console.error('Unable to connect to the database because of', err)
     });
 
-// Initialze simple route
-app.get('/', (req, res) => {
-    res.json({ message: 'Welcome to the sequalized application.'})
-})
+const articleRouter = require('./routes/article')
+app.use('/', articleRouter)
+
 
 app.listen(3005, () => {
     console.log('Server is running on http://localhost:3005')

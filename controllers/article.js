@@ -1,13 +1,10 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('mysql://arm:qwerty@localhost:3306/joga_sequelize')
 
-const Article = require('../models/article')(sequelize, Sequelize.DataTypes);
-const Author = require('../models/author')(sequelize, Sequelize.DataTypes)
-
-Article.hasOne(Author)
+const models = require('../models')
 
 const getAllArticles = (req, res) => {
-    Article.findAll()
+    models.Article.findAll()
     .then(articles => {
         console.log(articles)
         return res.status(200).json({ articles });
@@ -18,10 +15,13 @@ const getAllArticles = (req, res) => {
 }
 
 const getArticleBySlug = (req, res) => {
-    Article.findOne({
+    models.Article.findOne({
         where: {
             slug: req.params.slug
-        }
+        },
+        include: [{
+            model: models.Author
+    }],
     })
     .then(article => {
         console.log(article)

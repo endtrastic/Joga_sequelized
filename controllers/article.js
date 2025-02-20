@@ -32,7 +32,29 @@ const getArticleBySlug = (req, res) => {
     })
 }
 
+const GetAllOfTheAuthorsArticlesByID = async (req, res) => {
+
+    const authorId = req.params.id; 
+
+    const author = await models.Author.findByPk(authorId, {
+        include: [{
+            model: models.Article, 
+            as: 'Articles' 
+        }]
+    });
+
+    if (!author) {
+        return res.status(404).json({ message: 'Autorit ei leitud' });
+    }
+
+    const articles = author.Articles;
+    return res.status(200).json({ articles });
+
+};
+
+
 module.exports = {
     getAllArticles,
-    getArticleBySlug
+    getArticleBySlug,
+    GetAllOfTheAuthorsArticlesByID
 }

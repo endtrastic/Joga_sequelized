@@ -28,7 +28,8 @@ module.exports = {
         type: Sequelize.DATE
       },
       author_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

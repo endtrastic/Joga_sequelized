@@ -2,24 +2,25 @@
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.bulkInsert('Authors', [{
+    return queryInterface.bulkInsert('Authors', [
+      {
         name: 'Ashley Galvin',
+        slug: 'ashley-galvin',
         createdAt: new Date(),
         updatedAt: new Date()
-      }]),
-
-      queryInterface.bulkInsert('Authors', [{
+      },
+      {
         name: 'Patrick Beach',
+        slug: 'patrick-beach',
         createdAt: new Date(),
         updatedAt: new Date()
-      }]),
-
-      queryInterface.bulkInsert('Authors', [{
+      },
+      {
         name: 'MacKenzie Miller',
+        slug: 'mackenzie-miller',
         createdAt: new Date(),
         updatedAt: new Date()
-      }])
+      }
     ]);
   },
 

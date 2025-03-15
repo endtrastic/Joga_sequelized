@@ -31,7 +31,8 @@ module.exports = {
         allowNull: false
       }),
       queryInterface.changeColumn('Articles', 'author_id', {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true,
       })
     ]);
   },

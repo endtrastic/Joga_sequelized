@@ -27,6 +27,49 @@ const createArticle = (req, res) => {
     });
 };
 
+const updateArticle = (req, res) => {
+    const articleId = req.params.id;
+    models.Article.findByPk(articleId)
+    .then(article => {
+        console.log('Article fetched:', article);
+        if (!article) {
+            return res.status(404).json({ error: "Article not found" });
+        }
+
+        return models.Author.findAll()
+            .then(authors => {
+                console.log('Authors might be fetched:', authors.length);
+                res.status(200).json({ article, authors });
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).json({ error: "Error fetching authors", details: err.message });
+            });
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).json({ error: "Error fetching article", details: err.message });
+    });
+}
+
+const deleteArticle = (req, res) => {
+    const articleId = req.params.id;
+
+    models.Article.destroy({
+        where: { id: articleId }
+    })
+    .then(() => {
+        res.status(200).json({ message: "Article deleted successfully!" });
+    })
+    .catch(err => {
+        res.status(500).send("Error deleting article.");
+    });
+};
+
+
+
 module.exports = {
-    createArticle
+    createArticle,
+    updateArticle,
+    deleteArticle
 };
